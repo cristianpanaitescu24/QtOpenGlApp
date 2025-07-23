@@ -1,0 +1,58 @@
+# === Qt Creator ===
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.autosave
+
+# === Build directories ===
+build-*/
+cmake-build-*/
+build/
+out/
+debug/
+release/
+
+# === CMake artifacts ===
+CMakeFiles/
+CMakeCache.txt
+CMakeLists.txt.user
+cmake_install.cmake
+Makefile
+*.cmake
+*.ninja
+*.ninja_deps
+*.ninja_log
+rules.ninja
+
+# === Compiled binaries ===
+*.exe
+*.dll
+*.so
+*.dylib
+*.app
+
+# === Object and intermediate files ===
+*.o
+*.obj
+*.a
+*.lib
+*.pch
+*.ilk
+*.exp
+*.manifest
+
+# === Qt auto-generated files ===
+moc_*
+ui_*
+qrc_*
+*.moc
+
+# === Logs and temporary files ===
+*.log
+*.tmp
+
+# === OS-specific ===
+.DS_Store
+.directory
+Thumbs.db
