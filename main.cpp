@@ -1,11 +1,14 @@
 #include "MainWindow.h"
-
 #include <QApplication>
+#include <QImage>
+
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
+    QApplication app(argc, argv);
+    MainWindow w; // declaration or variable named "w" being a member of class MainWindow
     w.show();
-    return a.exec();
+    return app.exec();
 }
+
+

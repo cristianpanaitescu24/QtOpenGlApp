@@ -23,9 +23,5 @@ protected:
     void resizeGL(int w, int h) override;
     void paintGL() override;
 
-private:
-    float slider1Value = 0.5f;
-    float slider2Value = 0.5f;
-
     GlRenderer renderer;
 };

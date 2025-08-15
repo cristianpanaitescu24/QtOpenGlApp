@@ -22,22 +22,36 @@ public:
     GlRenderer();
     ~GlRenderer();
 
+
     bool Init();
     void Draw();
 
-    void SetShape(ShapeType shape) { currentShape = shape; SetAttributes(shape); }
+    void SetShape(ShapeType shape);
 
+    ShapeType currentShape = ShapeType::Triangle;
+
+    void SetShapeX(float x) { shapePositionX = x; }
+    void SetShapeY(float y) { shapePositionY = y; }
+
+    float GetShapeX() {return shapePositionX; }
+    float GetShapeY() {return shapePositionY; }
+
+    void SetShapeColorToRandom();
 private:
     bool LoadShader(const QString& vertexPath, const QString& fragmentPath);
     bool SetAttributes(ShapeType shape);
     bool SetUniforms();
 
     QOpenGLShaderProgram* shaderProgram = nullptr;
-    QOpenGLBuffer vbo;
-    QOpenGLVertexArrayObject vao;
 
-    ShapeType currentShape = ShapeType::Triangle;
+    QOpenGLBuffer               vbo;
+    QOpenGLVertexArrayObject    vao;
 
     // Uniform values
-    float u_size = DEFAULT_SIZE;
+    float                       shapePositionX;
+    float                       shapePositionY;
+
+    float   r = 0.f, g = 0.f,  b = 0.f;
+
+    int                         verticesCount;
 };

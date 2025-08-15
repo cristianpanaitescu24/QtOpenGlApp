@@ -14,6 +14,7 @@ CustomGlWidget::CustomGlWidget(QWidget* parent)
 void CustomGlWidget::initializeGL()
 {
     initializeOpenGLFunctions();
+
     renderer.Init();
 
     glClearColor(0.7f, 0.2f, 0.3f, 1.0f); // random red color
@@ -21,14 +22,12 @@ void CustomGlWidget::initializeGL()
 
 void CustomGlWidget::resizeGL(int w, int h)
 {
-
     glViewport(0, 0, w, h);
 }
 
 void CustomGlWidget::paintGL()
-
 {
-    glClearColor(slider1Value, slider2Value, 0.0f, 1.0f);
+    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     renderer.Draw();
@@ -36,19 +35,35 @@ void CustomGlWidget::paintGL()
 
 // CODE FOR SLOTS
 void CustomGlWidget::setSlider1Value(float v) {
-    slider1Value = v;
+    renderer.SetShapeX(v * 2 - 1.f);
     update();
 }
 
 void CustomGlWidget::setSlider2Value(float v) {
-    slider2Value = v;
+    renderer.SetShapeY(v * 2 - 1.f);
     update();
 }
 
 void CustomGlWidget::doAction1() {
-    qDebug() << "button 1: TODO Make this cicle between different shapes";
+    if(renderer.currentShape == ShapeType::Triangle)
+    {
+        qDebug("updating shape to Square");
+        renderer.SetShape(ShapeType::Square);
+    }
+    else if(renderer.currentShape == ShapeType::Square)
+    {
+        qDebug("updating shape to Circle");
+        renderer.SetShape(ShapeType::Circle);
+    }
+    else if(renderer.currentShape == ShapeType::Circle)
+    {
+        qDebug("updating shape to Triangle");
+        renderer.SetShape(ShapeType::Triangle);
+    }
 }
 
-void CustomGlWidget::doAction2() {
-    qDebug() << "button 2: TODO Make this change position of shape with new random one";
+void CustomGlWidget::doAction2()
+{
+    qDebug("Randomizing shape color.");
+    renderer.SetShapeColorToRandom();
 }

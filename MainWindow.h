@@ -2,7 +2,6 @@
 #include <QMainWindow>
 #include "CustomGlWidget.h"
 
-class MyGLWidget;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
