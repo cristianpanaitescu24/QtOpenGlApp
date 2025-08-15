@@ -67,3 +67,10 @@ void CustomGlWidget::doAction2()
     qDebug("Randomizing shape color.");
     renderer.SetShapeColorToRandom();
 }
+
+
+void CustomGlWidget::nnnn()
+{
+    qDebug("Randomizing shape color. BUTTON 3 pressed");
+    renderer.SetShapeX(renderer.GetShapeX() + 0.05f);
+}

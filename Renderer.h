@@ -30,7 +30,10 @@ public:
 
     ShapeType currentShape = ShapeType::Triangle;
 
-    void SetShapeX(float x) { shapePositionX = x; }
+    void SetShapeX(float x) {
+        qDebug("Chaging positon to %d", x);
+        shapePositionX = x;
+    }
     void SetShapeY(float y) { shapePositionY = y; }
 
     float GetShapeX() {return shapePositionX; }
@@ -45,6 +48,9 @@ private:
     QOpenGLShaderProgram* shaderProgram = nullptr;
 
     QOpenGLBuffer               vbo;
+    QOpenGLBuffer               vboColor;
+
+
     QOpenGLVertexArrayObject    vao;
 
     // Uniform values

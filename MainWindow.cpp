@@ -26,4 +26,5 @@ MainWindow::MainWindow(QWidget *parent)
     connect(controls, &ControlsWidget::slider2Changed, glWidget, &CustomGlWidget::setSlider2Value);
     connect(controls, &ControlsWidget::button1Pressed, glWidget, &CustomGlWidget::doAction1);
     connect(controls, &ControlsWidget::button2Pressed, glWidget, &CustomGlWidget::doAction2);
+    connect(controls, &ControlsWidget::button3Pressed, glWidget, &CustomGlWidget::nnnn);
 }

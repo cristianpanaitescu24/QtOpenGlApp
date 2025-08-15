@@ -9,6 +9,7 @@ ControlsWidget::ControlsWidget(QWidget* parent)
 {
     b1 = new QPushButton("Button 1", this);
     b2 = new QPushButton("Button 2", this);
+    b3 = new QPushButton("Button 3", this);
 
     slider1 = new QSlider(Qt::Horizontal, this);
     slider2 = new QSlider(Qt::Horizontal, this);
@@ -21,6 +22,7 @@ ControlsWidget::ControlsWidget(QWidget* parent)
     QVBoxLayout* layout = new QVBoxLayout(this);
     layout->addWidget(b1);
     layout->addWidget(b2);
+    layout->addWidget(b3);
     layout->addWidget(new QLabel("Slider 1"));
     layout->addWidget(slider1);
     layout->addWidget(new QLabel("Slider 2"));
@@ -35,4 +37,5 @@ ControlsWidget::ControlsWidget(QWidget* parent)
     });
     connect(b1, &QPushButton::clicked, this, &ControlsWidget::button1Pressed);
     connect(b2, &QPushButton::clicked, this, &ControlsWidget::button2Pressed);
+    connect(b3, &QPushButton::released, this, &ControlsWidget::button3Pressed);
 }

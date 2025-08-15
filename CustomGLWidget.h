@@ -17,6 +17,7 @@ public slots:
     void setSlider2Value(float v);
     void doAction1();
     void doAction2();
+    void nnnn();
 
 protected:
     void initializeGL() override;

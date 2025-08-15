@@ -107,26 +107,44 @@ bool GlRenderer::SetAttributes(ShapeType shape)
         return false;
     }
 
+
+    float verticesColor[] {
+        0.f, 0.f, 0.f, //v1 color
+        1.f, 0.f, 0.f,
+        0.f, 1.f, 0.f,
+    };
+
     // Create VAO
     if (!vao.isCreated()) vao.create();
     vao.bind();
+    // Configure attribute
+    shaderProgram->bind();
 
     // Create VBO
-    if (!vbo.isCreated()) vbo.create();
+    if (!vbo.isCreated())
+        vbo.create();
     vbo.bind();
     vbo.allocate(vertices, verticesCount * sizeof(float) * 2);
 
-    // Configure attribute
-    shaderProgram->bind();
+    // my vertex position
     shaderProgram->enableAttributeArray(0);
-
     shaderProgram->setAttributeBuffer(0, GL_FLOAT, 0, 2, 2 * sizeof(float));
+
+    if (!vboColor.isCreated())
+        vboColor.create();
+    vboColor.bind();
+    vboColor.allocate(verticesColor, verticesCount * sizeof(float) * 3);
+
+    // my vertex color
+    shaderProgram->enableAttributeArray(1);
+    shaderProgram->setAttributeBuffer(1, GL_FLOAT, 0, 3, 3 * sizeof(float));
 
     shaderProgram->release();
 
 
     vao.release();
     vbo.release();
+    vboColor.release();
 
     delete[] vertices;
 
@@ -148,7 +166,6 @@ void GlRenderer::Draw()
 {
     if (!shaderProgram || !vao.isCreated()) return;
 
-
     shaderProgram->bind();
     SetUniforms();
 
@@ -157,6 +174,7 @@ void GlRenderer::Draw()
     vao.release();
 
     shaderProgram->release();
+
 }
 
 void GlRenderer::SetShape(ShapeType shape)

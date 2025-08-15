@@ -1,9 +1,11 @@
 #pragma once
 
+
 #include <QWidget>
 
 class QPushButton;
 class QSlider;
+
 
 class ControlsWidget : public QWidget {
     Q_OBJECT
@@ -15,10 +17,15 @@ signals:
     void slider2Changed(float value);
     void button1Pressed();
     void button2Pressed();
+    void button3Pressed();
 
 private:
     QPushButton* b1;
     QPushButton* b2;
+    QPushButton* b3;
+
     QSlider* slider1;
     QSlider* slider2;
+
 };
+
