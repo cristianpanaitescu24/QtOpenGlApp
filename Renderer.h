@@ -4,6 +4,7 @@
 #include <QOpenGLBuffer>
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLShaderProgram>
+#include "GLTexture.h"
 
 enum class ShapeType {
     Triangle,
@@ -48,7 +49,7 @@ private:
     QOpenGLShaderProgram* shaderProgram = nullptr;
 
     QOpenGLBuffer               vbo;
-    QOpenGLBuffer               vboColor;
+    QOpenGLBuffer               vboTexcoords;
 
 
     QOpenGLVertexArrayObject    vao;
@@ -60,4 +61,8 @@ private:
     float   r = 0.f, g = 0.f,  b = 0.f;
 
     int                         verticesCount;
+
+    // Texture
+    GLTexture *                 myTexture;
+
 };

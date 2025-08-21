@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QRandomGenerator>
 
+#define PATH_TO_IMAGE "C:\\Users\\crist\\Downloads\\zlotea.jpg"
+
 GlRenderer::GlRenderer()
     : vbo(QOpenGLBuffer::VertexBuffer)
 {
@@ -14,6 +16,8 @@ GlRenderer::GlRenderer()
 
 GlRenderer::~GlRenderer()
 {
+    delete myTexture;
+
     if (shaderProgram) {
         delete shaderProgram;
         shaderProgram = nullptr;
@@ -21,6 +25,8 @@ GlRenderer::~GlRenderer()
 
     if (vbo.isCreated()) vbo.destroy();
     if (vao.isCreated()) vao.destroy();
+
+
 }
 
 bool GlRenderer::Init()
@@ -31,7 +37,14 @@ bool GlRenderer::Init()
         return false;
     }
 
-    return     SetAttributes(currentShape);;
+    bool res = SetAttributes(currentShape);
+
+    if(res == true)
+    {
+        myTexture = new GLTexture(PATH_TO_IMAGE);
+    }
+
+    return res;
 }
 
 bool GlRenderer::LoadShader(const QString& vertexPath, const QString& fragmentPath)
@@ -87,14 +100,14 @@ bool GlRenderer::SetAttributes(ShapeType shape)
     {
         float sq[] = {  // stack memory. smaller. dosnt  neeed allocation and destruction.
             // first triangle
-            -0.5f, -0.5f,
-            -0.5f,  0.5f,
-             0.5f, -0.5f,
+            -0.5f, -0.5f, //  left bottom
+            -0.5f,  0.5f, //  left top
+             0.5f, -0.5f, //  right bottm
 
             // second triangle
-             0.5f, -0.5f,
-            -0.5f,  0.5f,
-             0.5f,  0.5
+             0.5f, -0.5f, //  right bottm
+            -0.5f,  0.5f, //  left top
+             0.5f,  0.5   //  right top
         };
 
         memcpy(vertices, sq, sizeof(sq));
@@ -108,10 +121,15 @@ bool GlRenderer::SetAttributes(ShapeType shape)
     }
 
 
-    float verticesColor[] {
-        0.f, 0.f, 0.f, //v1 color
-        1.f, 0.f, 0.f,
-        0.f, 1.f, 0.f,
+    float texcoords[] {
+        0.0f, 1.0f,  // bottom left
+        0.0f, 0.0f,  // bottom right
+        1.0f, 1.0f,  // top left
+
+        // Triangle 2
+        1.0f, 1.0f,  // bottom right
+        0.0f, 0.0f,  // top right
+        1.0f, 0.0f   // top left
     };
 
     // Create VAO
@@ -130,21 +148,21 @@ bool GlRenderer::SetAttributes(ShapeType shape)
     shaderProgram->enableAttributeArray(0);
     shaderProgram->setAttributeBuffer(0, GL_FLOAT, 0, 2, 2 * sizeof(float));
 
-    if (!vboColor.isCreated())
-        vboColor.create();
-    vboColor.bind();
-    vboColor.allocate(verticesColor, verticesCount * sizeof(float) * 3);
+    if (!vboTexcoords.isCreated())
+        vboTexcoords.create();
+    vboTexcoords.bind();
+    vboTexcoords.allocate(texcoords, verticesCount * sizeof(float) * 2);
 
     // my vertex color
     shaderProgram->enableAttributeArray(1);
-    shaderProgram->setAttributeBuffer(1, GL_FLOAT, 0, 3, 3 * sizeof(float));
+    shaderProgram->setAttributeBuffer(1, GL_FLOAT, 0, 2, 2 * sizeof(float));
 
     shaderProgram->release();
 
 
     vao.release();
     vbo.release();
-    vboColor.release();
+    vboTexcoords.release();
 
     delete[] vertices;
 
@@ -158,6 +176,8 @@ bool GlRenderer::SetUniforms()
     shaderProgram->bind();
     shaderProgram->setUniformValue("u_positionOffset", QVector2D(shapePositionX, shapePositionY));
     shaderProgram->setUniformValue("u_color", QVector3D(r, g, b));
+
+    myTexture->Bind();
 
     return true;
 }
