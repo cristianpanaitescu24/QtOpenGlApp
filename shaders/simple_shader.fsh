@@ -11,7 +11,6 @@ uniform sampler2D u_texture;
 in vec2 v_texcoords;
 
 void main() {
-	vec4 myTex1
     out_fragColor = texture(u_texture, v_texcoords);
 	//vec4(v_color, 1.0);
 }

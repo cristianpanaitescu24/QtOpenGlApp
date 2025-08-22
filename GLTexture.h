@@ -1,20 +1,27 @@
-// Texture.h
-#pragma once
+
 
 #include <QOpenGLFunctions>
-#include <QOpenGLTexture>
 #include <QImage>
 #include <QString>
+
+#pragma once
 
 class GLTexture : protected QOpenGLFunctions
 {
 public:
     GLTexture(const QString &filePath);
+    GLTexture(uint32_t format);
 
-    ~GLTexture();
+    virtual ~GLTexture();
 
-    void Bind();
+    // getter function
+    GLuint GetTextureID() {return mTextureId;}
 
+protected:
 private:
-    QOpenGLTexture *m_texture;
+
+    GLuint      mTextureId;
+    QImage     *mImage;
+
 };
+

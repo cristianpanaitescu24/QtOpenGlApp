@@ -25,8 +25,6 @@ GlRenderer::~GlRenderer()
 
     if (vbo.isCreated()) vbo.destroy();
     if (vao.isCreated()) vao.destroy();
-
-
 }
 
 bool GlRenderer::Init()
@@ -120,7 +118,6 @@ bool GlRenderer::SetAttributes(ShapeType shape)
         return false;
     }
 
-
     float texcoords[] {
         0.0f, 1.0f,  // bottom left
         0.0f, 0.0f,  // bottom right
@@ -176,8 +173,25 @@ bool GlRenderer::SetUniforms()
     shaderProgram->bind();
     shaderProgram->setUniformValue("u_positionOffset", QVector2D(shapePositionX, shapePositionY));
     shaderProgram->setUniformValue("u_color", QVector3D(r, g, b));
+    int err = 0;
 
-    myTexture->Bind();
+    err = glGetError();
+    qDebug("error %d", err);
+
+    int textureLocation = glGetUniformLocation(shaderProgram->programId(), "u_texture");
+    glActiveTexture(GL_TEXTURE0);
+
+    err = glGetError();
+    qDebug("error before glBindTexture%d", err);
+    auto texid = myTexture->GetTextureID();
+    glBindTexture(GL_TEXTURE_2D, texid);
+
+    err = glGetError();
+    qDebug("error after glBindTexture %d", err);
+    glUniform1i(textureLocation, 0);
+
+    err = glGetError();
+    qDebug("error %d", err);
 
     return true;
 }
